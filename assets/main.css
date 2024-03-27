@@ -1,0 +1,150 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+* {
+	outline: 1px solid blue;
+	user-select: none;
+	-webkit-user-drag: none;
+}
+body {
+	background: #f0f0f0;
+	color: #373737;
+}
+.test {
+	outline: 1px solid red;
+}
+.logo {
+	content: url(img/logo.png);
+	width: 45px;
+	height: 45px;
+}
+header {
+	.fontSmall {
+		font-size: 12px;
+	}
+	.iconCursor {
+		cursor: pointer;
+
+		.icon {
+			font-size: 25px;
+		}
+	}
+}
+.displayBook {
+	.header {
+		width: fit-content;
+	}
+	.book {
+		position: relative;
+		transition: .2s;
+		cursor: pointer;
+	}
+	.book:hover {
+		border: none;
+		box-shadow: 0 0 3px black;
+		transform: scale(1.05);
+	}
+	.cover {
+		width: 190px;
+		height: 190px;
+		padding-bottom: 16px;
+
+		img {
+			height: inherit;
+		}
+	}
+	.title {
+		height: 40px;
+		font-size: 14px;
+		overflow: hidden;
+	}
+	.price {
+		color: red;
+	}
+	.price::after {
+		content: 'đ';
+	}
+	.statusGreen,
+	.statusRed {
+		font-size: 10px;
+	}
+	.statusGreen {
+		background: #7aff72;
+		color: #08bf00;
+	}
+	.statusGreen::before {
+		content: 'Còn hàng';
+	}
+	.statusRed {
+		background: #ff5553;
+		color: #bf0019;
+	}
+	.statusRed::before {
+		content: 'Hết hàng';
+	}
+}
+footer {
+	h1 {
+		white-space: nowrap;
+		font-size: 32px;
+	}
+	h2 {
+		margin: 0;
+		font-size: 16px;
+	}
+	p {
+		margin: 0;
+		font-size: 14px;
+	}
+	.social {
+		.icon {
+			width: 35px;
+			height: 35px;
+			background: grey;
+			border-radius: 1rem;
+			font-size: 23px;
+			cursor: pointer;
+		}
+
+		.bi-facebook:hover {
+			color: #0866ff;
+		}
+		.bi-youtube:hover {
+			color: #ff0000;
+		}
+		.bi-instagram:hover {
+			color: #b732ac;
+		}
+		.bi-twitter-x:hover {
+			color: black;
+		}
+	}
+	.widthMax {
+		width: 100%;
+	}
+	.textBot {
+		color: grey;
+		font-size: 12px;
+	}
+}
+.table {
+	th, td {
+		border: 1px solid black;
+	}
+	th, td {
+		padding: 6px 12px;
+	}
+	th {
+		background-color: lightblue;
+	}
+	.cover {
+		width: 150px;
+		height: 150px;
+		padding: 16px;
+
+		img {
+			height: inherit;
+		}
+	}
+}
+@media only screen and (max-width: 767px) {
+
+}
