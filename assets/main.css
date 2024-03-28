@@ -1,6 +1,6 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 * {
-	outline: 1px solid blue;
+/*	outline: 1px solid blue;*/
 	user-select: none;
 	-webkit-user-drag: none;
 }
@@ -31,24 +31,30 @@ header {
 .displayBook {
 	.header {
 		width: fit-content;
+
+		.icon {
+			font-size: 25px;
+		}
 	}
 	.book {
-		position: relative;
 		transition: .2s;
-		cursor: pointer;
+		
+		button {
+			cursor: pointer;
+		}
 	}
 	.book:hover {
 		border: none;
 		box-shadow: 0 0 3px black;
-		transform: scale(1.05);
+		transform: translateY(-10px);
 	}
 	.cover {
 		width: 190px;
 		height: 190px;
-		padding-bottom: 16px;
 
 		img {
-			height: inherit;
+			max-width: 100%;
+			max-height: 100%;
 		}
 	}
 	.title {
@@ -79,6 +85,27 @@ header {
 	}
 	.statusRed::before {
 		content: 'Hết hàng';
+	}
+	.volumeText {
+		background: black;
+		color: white;
+		font-size: 12px;
+	}
+	.volumeText::before {
+		content: 'Tập ';
+	}
+	.addBook {
+		.cover {
+			width: 230px;
+			height: 230px;
+		}
+	}
+	.display {
+		td:nth-child(7) {
+			div {
+				cursor: pointer;
+			}
+		}
 	}
 }
 footer {

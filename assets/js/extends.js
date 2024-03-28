@@ -1,17 +1,17 @@
 const header = `
 	<div class="d-flex align-items-end gap-2">
 		<div class="logo"></div>
-		<h1 class="m-0">Shuuya's Bookstore</h1>
+		<a class="m-0 h1 link-dark link-underline-opacity-0" href="/shuuya-bookstore">Shuuya's Bookstore</a>
 	</div>
 	<div class="d-flex gap-3">
-		<div class="iconCursor d-flex flex-column justify-content-center">
+		<a class="iconCursor d-flex flex-column justify-content-center link-dark link-underline-opacity-0" href="/shuuya-bookstore/kho-sach">
 			<i class="bi bi-journals icon text-center"></i>
 			<span class="fontSmall">Kho sách</span>
-		</div>
-		<div class="iconCursor d-flex flex-column justify-content-center">
+		</a>
+		<a class="iconCursor d-flex flex-column justify-content-center link-dark link-underline-opacity-0" href="/shuuya-bookstore/gio-hang">
 			<i class="bi bi-cart4 icon text-center"></i>
 			<span class="fontSmall">Giỏ hàng</span>
-		</div>
+		</a>
 	</div>
 `;
 
