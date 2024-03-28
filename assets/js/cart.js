@@ -1,3 +1,4 @@
+// Khởi tạo
 var tempCart = [];
 if(localStorage.getItem('lCart'))
 	tempCart = JSON.parse(localStorage.getItem('lCart'));
@@ -38,7 +39,7 @@ function displayCart(storage, tCart) {
 										<input type="number" class="form-control" id="volume" value="${storage[j].volume}" disabled>
 									</div>
 									<div class="col-md-4 my-1">
-										<label for="price" class="form-label">Giá</label>
+										<label for="price" class="form-label">Đơn giá</label>
 										<div class="input-group">
 											<input type="number" class="form-control" id="price" value="${storage[j].price}" disabled>
 											<span class="input-group-text">đ</span>
@@ -46,17 +47,20 @@ function displayCart(storage, tCart) {
 									</div>
 									<div class="col-md-4 my-1">
 										<label for="quantity" class="form-label">Số lượng</label>
-										<input type="number" class="form-control" id="quantity" value="1" value="${storage[j].quantity}" onchange="sum(this.closest('.row'))" required>
+										<div class="input-group">
+											<input type="number" class="quantity form-control" id="quantity" value="1" onchange="sum(this.closest('.row')); inputControl(this); inputLimit(this)" required>
+											<span class="input-group-text">/${storage[j].quantity}</span>
+										</div>
 									</div>
-									<div class="col-md-8 my-1">
+									<div class="col-md-6 my-1">
 										<label for="total" class="form-label">Thành tiền</label>
 										<div class="input-group">
-											<input type="number" class="form-control" id="total" value="${storage[j].price * storage[j].quantity}" disabled>
+											<input type="number" class="form-control" id="total" value="${storage[j].price}" disabled>
 											<span class="input-group-text">đ</span>
 										</div>
 									</div>
-									<div class="col-md-4 my-1 d-flex justify-content-end align-items-end gap-4">
-										<button class="btn btn-success" id="b${storage[j].id}" onclick="payItem(this)">Thanh toán</button>
+									<div class="col-md-6 my-1 d-flex justify-content-end align-items-end gap-4">
+										<button class="pay btn btn-success" id="b${storage[j].id}" onclick="payItem(this)">Thanh toán</button>
 										<button class="btn btn-danger" id="b${storage[j].id}" onclick="removeItem(this)">Xóa</button>
 									</div>
 								</div>
@@ -71,18 +75,21 @@ function displayCart(storage, tCart) {
 			}
 		}
 		const button = `
-			<div class="d-flex justify-content-around py-2">
-				<button class="btn btn-success">Thanh toán tất cả</button>
+			<div class="btnGroup d-flex flex-md-row flex-column justify-content-around pt-2 gap-2">
+				<button class="payAll btn btn-success" onclick="payCart()">Thanh toán tất cả</button>
 				<button class="btn btn-danger" onclick="removeCart()">Xóa tất cả</button>
 			</div>
 		`;
-		if(temp != '')
+		if(temp != '') {
 			temp += button;
+			cart.innerHTML = temp;
+		}
 
-		cart.innerHTML = temp;
+		loadLimit();
 	}
 }
 
+// Đổi nút thêm/xóa (Trang chính)
 function checkCart() {
 	if(document.querySelectorAll('.btnCart')) {
 		const button = document.querySelectorAll('.btnCart');
@@ -99,6 +106,7 @@ function checkCart() {
 	disAdd();
 }
 
+// Thêm vào giỏ hàng (Trang chính)
 function addToCart() {
 	for(var i = 0; i < tempStorage.length; i++){
 		if(tempStorage[i].id == this.id.slice(1)) {
@@ -117,6 +125,7 @@ function addToCart() {
 	updateCart();
 }
 
+// Xóa khỏi giỏ hàng (Trang chính)
 function removeFromCart() {
 	const tempId = this.id.slice(1);
 
@@ -149,18 +158,50 @@ function removeFromCart() {
 	updateCart();
 }
 
+// Thành tiền 1 sách = Đơn giá * Số lượng
 function sum(item) {
 	const priceInput = item.querySelector('#price');
 	const quantityInput = item.querySelector('#quantity');
 	const totalInput = item.querySelector('#total');
 
-	totalInput.value = priceInput.value * quantityInput.value;
+	const temp = setTimeout(function() {
+		totalInput.value = priceInput.value * quantityInput.value;
+	}, 200);
 }
 
+// Giới hạn Input số lượng
+function inputLimit(item) {
+	const limit = item.closest('div').querySelector('span').textContent.slice(1);
+	const btnControl = item.closest('.row').querySelector('.pay');
+	const btnList = document.querySelectorAll('.pay');
+
+	if(item.value > limit)
+		item.value = limit;
+
+	if(item.value == 0)
+		btnControl.disabled = true;
+	else
+		btnControl.disabled = false;
+
+	var check = false;
+	for(var i = 0; i < btnList.length; i++) {
+		if(btnList[i].disabled) {
+			check = true;
+			break;
+		}
+	}
+	if(check)
+		document.querySelector('.payAll').disabled = true;
+	else
+		document.querySelector('.payAll').disabled = false;
+}
+
+// Thanh toán 1 sách
 function payItem(item) {
 	for(var i = 0; i < tempStorage.length; i++){
 		if(item.id.slice(1) == tempStorage[i].id) {
 			tempStorage[i].quantity -= item.closest('.row').querySelector('#quantity').value;
+			break;
 		}
 	}
 
@@ -168,39 +209,75 @@ function payItem(item) {
 	updateStorage();
 }
 
+// Xóa 1 sách khỏi giỏ hàng (Giỏ hàng)
 function removeItem(item) {
 	const tempId = item.id.slice(1);
 
 	for(var i = 0; i < tempCart.length; i++){
 		if(tempCart[i] == tempId) {
-			var tempC = tempCart[i];
+			var temp = tempCart[i];
 			tempCart[i] = tempCart[0];
-			tempCart[0] = tempC;
+			tempCart[0] = temp;
 			tempCart.shift();
 			break;
 		}
 	}
-	for(var i = 0; i < tempCart.length - 1; i++){
-		for(var j = i + 1; j < tempCart.length; j++){
-			if(tempCart[i] > tempCart[j]) {
-				var tempC = tempCart[i];
-				tempCart[i] = tempCart[j];
-				tempCart[j] = tempC;
-			}
-		}
-	}
 
-	item.closest('.addBook').remove();
+	if(item.closest('.addBook'))
+		item.closest('.addBook').remove();
 
+	checkEmpty();
 	updateCart();
 }
 
+// Thanh toán tất cả
 function payCart() {
+	const book = document.querySelectorAll('.addBook');
+
+	book.forEach(e => {
+		const id = e.querySelector('#id').value;
+		const quantity = e.querySelector('#quantity').value;
+
+		for(var i = 0; i < tempStorage.length; i++){
+			if(id == tempStorage[i].id) {
+				tempStorage[i].quantity -= quantity;
+				break;
+			}
+		}
+	});
+
+	updateStorage();
 	removeCart();
 }
+
+// Vứt giỏ hàng
 function removeCart() {
-	localStorage.removeFromCart('lCart');
+	localStorage.removeItem('lCart');
 	tempCart = [];
 	document.querySelector('.cart').remove();
-	document.querySelector('.displayBook').innerHTML += '<div class="cart mx-2"></div>';
+	document.querySelector('.displayBook').innerHTML += '<div class="cart p-3"><br class="btnGroup"></div>';
+
+	checkEmpty();
+}
+
+// Load limit
+function loadLimit() {
+	const temp = document.querySelectorAll('.quantity');
+
+	temp.forEach(e => {
+		inputLimit(e);
+	});
+}
+
+//
+function checkEmpty() {
+	const temp = `
+		<div class="text-center opacity-50"><i class="bi bi-cart4" style="font-size: 140px;"></i></div>
+		<h2 class="text-center opacity-50">Chưa có sách nào</h2>
+	`;
+
+	if(!document.querySelector('.addBook')) {
+		document.querySelector('.btnGroup').remove();
+		document.querySelector('.cart').innerHTML = temp;
+	}
 }

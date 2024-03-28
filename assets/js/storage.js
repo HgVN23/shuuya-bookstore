@@ -14,18 +14,12 @@ var tempStorage = [];
 if(localStorage.getItem('lStorage'))
 	tempStorage = JSON.parse(localStorage.getItem('lStorage'));
 
-// const storage = [
-// 	new Book(0, 'https://png.pngtree.com/thumb_back/fh260/background/20230408/pngtree-rainbow-curves-abstract-colorful-background-image_2164067.jpg', 'Tonikaku Kawaii', 18, 160000, 2),
-// 	// new Book(0, 'https://mangadex.org/covers/30f3ac69-21b6-45ad-a110-d011b7aaadaa/0dddf687-95ec-4e88-acd7-cd90a4c9749a.jpg', 'Tonikaku Kawaii', 18, 160000, 2),
-// 	new Book(1, 'https://mangadex.org/covers/188e4f34-a80c-4a91-b54e-69572e8ed4d5/43f01b64-35f1-4938-afa5-4767f6401294.jpg', 'Saint Cecilia and Pastor Lawrence', 23, 160000, 0)
-// ]
-
 // Update lại localStorage
 function updateStorage() {
 	localStorage.setItem('lStorage', JSON.stringify(tempStorage));
 }
 
-// Load sách lúc đầu
+// Khởi tạo
 const idInput = document.querySelector('#id');
 const coverInput = document.querySelector('#coverPreview');
 const titleInput = document.querySelector('#title');
@@ -46,6 +40,7 @@ if(document.querySelector('form')) {
 function showBook(storage) {
 	if(document.querySelector('.show')) {
 		const show = document.querySelector('.show');
+		var temp = '';
 
 		storage.forEach(e => {
 			var status;
@@ -67,8 +62,10 @@ function showBook(storage) {
 				</div>
 			`;
 
-			show.innerHTML += book;
+			temp += book;
 		});
+		if(temp != '')
+			show.innerHTML = temp;
 	}
 }
 
@@ -82,14 +79,14 @@ function displayBook(storage) {
 			const tDRow = `
 				<tr class="text-center" id="b${e.id}">
 					<td>${e.id}</td>
-					<td class="cover text-center"><img src="${e.cover}"></td>
+					<td class=""><div class="cover mx-auto"><img src="${e.cover}"></div></td>
 					<td class="text-start">${e.title}</td>
 					<td>${e.volume}</td>
 					<td class="text-end">${e.price}đ</td>
 					<td>${e.quantity}</td>
 					<td>
 						<div class="text-nowrap" onclick="editBook(this.closest('tr'))"><i class="bi bi-pencil-square"></i> Chỉnh sửa</div>
-						<div class="text-nowrap" onclick="removeBook(this.closest('tr').id.slice(1))"><i class="bi bi-trash3-fill"></i> Loại bỏ</div>
+						<div class="text-nowrap" onclick="removeBook(this.closest('tr'))"><i class="bi bi-trash3-fill"></i> Loại bỏ</div>
 					</td>
 				</tr>
 			`;
@@ -111,7 +108,10 @@ if(document.querySelector('input#cover')) {
 		if (file) {
 			iCover.closest('form').querySelector('img').src = URL.createObjectURL(file);
 		}*/
-		iCover.closest('form').querySelector('img').src = iCover.value;
+		if(iCover.value != "")
+			iCover.closest('form').querySelector('img').src = iCover.value;
+		else
+			iCover.closest('form').querySelector('img').src = 'https://cdn.discordapp.com/attachments/677761423870525442/1222854468450910298/coverNull.png?ex=6617baf8&is=660545f8&hm=fdb5c8f6b26fb95b20298281d5f7e9989e74dd8f4e7cf92228dbf68f415d51eb&';
 	}
 }
 
@@ -165,9 +165,9 @@ function addBook() {
 }
 
 //Remove Book khỏi Kho
-function removeBook(id) {
+function removeBook(item) {
 	for(var i = 0; i < tempStorage.length; i++){
-		if(tempStorage[i].id == id) {
+		if(tempStorage[i].id == item.id.slice(1)) {
 			var temp = tempStorage[i];
 			tempStorage[i] = tempStorage[0];
 			tempStorage[0] = temp;
@@ -187,12 +187,16 @@ function removeBook(id) {
 	displayBook(tempStorage);
 	updateStorage();
 
+	removeItem(item)
+
 	resetForm();
 }
 
 //Chỉnh sửa Book
 function editBook(tr) {
 	idInput.value = tr.querySelector('td:nth-child(1)').textContent;
+	coverInput.src = tr.querySelector('img').src;
+	coverInput.closest('.row').querySelector('#cover').value = tr.querySelector('img').src;
 	titleInput.value = tr.querySelector('td:nth-child(3)').textContent;
 	volumeInput.value = tr.querySelector('td:nth-child(4)').textContent;
 	var temp = tr.querySelector('td:nth-child(5)').textContent;
@@ -205,9 +209,11 @@ function editBook(tr) {
 	form.parentElement.scrollIntoView();
 }
 
+// Xác nhận chỉnh sửa
 function editConfirm() {
 	for(var i = 0; i < tempStorage.length; i++){
 		if(tempStorage[i].id == idInput.value) {
+			tempStorage[i].cover = coverInput.src;
 			tempStorage[i].title = titleInput.value;
 			tempStorage[i].volume = volumeInput.value;
 			tempStorage[i].price = priceInput.value;
@@ -241,4 +247,24 @@ function disAdd() {
 			}
 		}
 	});
+}
+
+// Ngăn không Input số âm
+function inputControl(input) {
+	if(input.value < 0)
+		input.value = 0;
+}
+
+// Tạo storage để Test
+function test() {
+	tempStorage = [
+		new Book(0, 'https://mangadex.org/covers/30f3ac69-21b6-45ad-a110-d011b7aaadaa/0dddf687-95ec-4e88-acd7-cd90a4c9749a.jpg', 'Tonikaku Kawaii', 18, 160000, 5),
+		new Book(1, 'https://mangadex.org/covers/188e4f34-a80c-4a91-b54e-69572e8ed4d5/43f01b64-35f1-4938-afa5-4767f6401294.jpg', 'Saint Cecilia and Pastor Lawrence', 23, 160000, 3),
+		new Book(2, 'https://png.pngtree.com/thumb_back/fh260/background/20230408/pngtree-rainbow-curves-abstract-colorful-background-image_2164067.jpg', 'Sách rộng', 2, 160000, 0),
+		new Book(3, 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/bdcb3b69213341.5b791e43d1b10.jpg', 'Sách dài', 7, 160000, 1)
+	]
+
+	updateStorage();
+
+	location.reload();
 }

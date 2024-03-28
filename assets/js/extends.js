@@ -1,9 +1,9 @@
 const header = `
-	<div class="d-flex align-items-end gap-2">
+	<div class="tab d-flex justify-content-center align-items-end gap-2 text-center">
 		<div class="logo"></div>
 		<a class="m-0 h1 link-dark link-underline-opacity-0" href="/shuuya-bookstore">Shuuya's Bookstore</a>
 	</div>
-	<div class="d-flex gap-3">
+	<div class="tab d-flex justify-content-around gap-3">
 		<a class="iconCursor d-flex flex-column justify-content-center link-dark link-underline-opacity-0" href="/shuuya-bookstore/kho-sach">
 			<i class="bi bi-journals icon text-center"></i>
 			<span class="fontSmall">Kho sách</span>
@@ -17,7 +17,7 @@ const header = `
 
 const headerCreate = document.createElement('header');
 headerCreate.innerHTML = header;
-headerCreate.classList.add('bg-white', 'border-bottom', 'border-4', 'px-5', 'py-2', 'd-flex', 'flex-wrap', 'justify-content-between', 'align-items-center', 'gap-2', 'position-sticky', 'top-0', 'z-3')
+headerCreate.classList.add('bg-white', 'border-bottom', 'border-4', 'px-3', 'py-2', 'd-flex', 'flex-wrap', 'justify-content-between', 'align-items-center', 'gap-2', 'position-sticky', 'top-0')
 document.querySelector("body").insertBefore(headerCreate, document.querySelector("body").children[0]);
 
 
@@ -27,7 +27,7 @@ const footer = `
 		<div class="d-flex flex-column gap-2">
 			<div class="d-flex align-items-end gap-2">
 				<div class="logo"></div>
-				<h1 class="m-0 text-wrap">Shuuya's Bookstore</h1>
+				<a class="m-0 h1 link-dark link-underline-opacity-0 text-center" href="/shuuya-bookstore">Shuuya's Bookstore</a>
 			</div>
 			<p>Địa chỉ: Nơi nào đó trên Trái Đất</p>
 			<p>Shuuya's Bookstore nhận đặt hàng trực tuyến và giao hàng tận nơi</p>
@@ -38,7 +38,6 @@ const footer = `
 				<div class="icon d-flex justify-content-center text-white"><i class="bi bi-twitter-x"></i></div>
 			</div>
 		</div>
-		<!-- <div class="border"></div> -->
 		<div class="d-flex flex-column gap-3">
 			<div class="d-flex flex-wrap justify-content-sm-around gap-3">
 				<div class="d-flex flex-column gap-2">
@@ -67,7 +66,7 @@ const footer = `
 					</div>
 					<div class="d-flex align-items-end gap-1">
 						<i class="bi bi-envelope-fill icon"></i>
-						<p>shuuyabookstore@gmail.com</p>
+						<p class="text-break">shuuyabookstore@gmail.com</p>
 					</div>
 					<div class="d-flex align-items-end gap-1">
 						<i class="bi bi-telephone-fill icon"></i>
