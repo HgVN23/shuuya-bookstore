@@ -1,3 +1,4 @@
+<?php include '../assets/php/db.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,11 +27,12 @@
 	<link rel="stylesheet" href="../assets/main.css">
 
 	<!-- JS -->
-	<script type="text/javascript" src="../assets/js/extends.js" defer></script>
-	<script type="text/javascript" src="../assets/js/storage.js" defer></script>
-	<script type="text/javascript" src="../assets/js/cart.js" defer></script>
+	<!-- <script type="text/javascript" src="../assets/js/extends.js" defer></script> -->
+	<!-- <script type="text/javascript" src="../assets/js/storage.js" defer></script> -->
+	<!-- <script type="text/javascript" src="../assets/js/cart.js" defer></script> -->
 </head>
 <body>
+	<?php include '../assets/php/header.php'; ?>
 	<section class="d-flex justify-content-center">
 		<div class="displayBook displayCart bg-white mx-4 my-3 container rounded">
 			<div class="header d-flex align-items-end gap-2 border-bottom border-2 mb-2 py-1">
@@ -43,5 +45,6 @@
 			</div>
 		</div>
 	</section>
+	<?php include '../assets/php/footer.php'; ?>
 </body>
 </html>

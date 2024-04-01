@@ -1,3 +1,4 @@
+<?php include 'assets/php/db.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,11 +27,12 @@
 	<link rel="stylesheet" href="assets/main.css">
 
 	<!-- JS -->
-	<script type="text/javascript" src="assets/js/extends.js" defer></script>
-	<script type="text/javascript" src="assets/js/storage.js" defer></script>
-	<script type="text/javascript" src="assets/js/cart.js" defer></script>
+	<!-- <script type="text/javascript" src="assets/js/extends.js" defer></script> -->
+	<!-- <script type="text/javascript" src="assets/js/storage.js" defer></script> -->
+	<!-- <script type="text/javascript" src="assets/js/cart.js" defer></script> -->
 </head>
 <body>
+	<?php include 'assets/php/header.php'; ?>
 	<section class="d-flex justify-content-center">
 		<div class="displayBook bg-white mx-4 my-3 container rounded">
 			<div class="header d-flex align-items-end gap-2 border-bottom border-2 py-1">
@@ -38,10 +40,10 @@
 				<h3 class="m-0">Các loại sách</h3>
 			</div>
 			<div class="show row p-3 gap-2 justify-content-center">
-				<div class="d-flex justify-content-center opacity-50"><img width="180" height="120" src="assets/img/book.png"></div>
-				<h2 class="text-center opacity-50">Chưa có sách nào</h2>
+				<?php showBook($result); ?>
 			</div>
 		</div>
 	</section>
+	<?php include 'assets/php/footer.php'; ?>
 </body>
 </html>

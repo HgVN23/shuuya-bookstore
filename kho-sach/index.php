@@ -1,3 +1,4 @@
+<?php include '../assets/php/db.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,23 +27,25 @@
 	<link rel="stylesheet" href="../assets/main.css">
 
 	<!-- JS -->
-	<script type="text/javascript" src="../assets/js/extends.js" defer></script>
-	<script type="text/javascript" src="../assets/js/storage.js" defer></script>
-	<script type="text/javascript" src="../assets/js/cart.js" defer></script>
+	<!-- <script type="text/javascript" src="../assets/js/extends.js" defer></script> -->
+	<!-- <script type="text/javascript" src="../assets/js/storage.js" defer></script> -->
+	<!-- <script type="text/javascript" src="../assets/js/cart.js" defer></script> -->
+	<script type="text/javascript" src="../assets/js/newStorage.js" defer></script>
 </head>
 <body>
+	<?php include '../assets/php/header.php'; ?>
 	<section class="d-flex justify-content-center">
 		<div class="displayBook bg-white mx-4 my-3 container rounded">
 			<div class="header d-flex align-items-end gap-2 border-bottom border-2 py-1">
 				<i class="bi bi-pencil-square icon"></i>
 				<h3 class="m-0">Cập nhật sách</h3>
 			</div>
-			<form class="addBook row mt-2">
+			<form class="addBook row mt-2" method="POST">
 				<div class="col-md-4 d-flex flex-column gap-2">
 					<div>
 						<label for="cover" class="form-label">Ảnh bìa</label>
-						<!-- <input class="form-control" type="file" id="cover" accept="image/*"> -->
-						<input class="form-control" type="text" id="cover" accept="image/*" placeholder="Link ảnh...">
+						<input class="form-control" type="file" id="cover" name="coverImg" accept="image/*">
+						<!-- <input class="form-control" type="text" id="cover" accept="image/*" placeholder="Link ảnh..."> -->
 					</div>
 					<div class="cover border mb-2 align-self-center d-flex justify-content-center text-center"><img id="coverPreview" class="align-self-center" src="https://cdn.discordapp.com/attachments/677761423870525442/1222854468450910298/coverNull.png?ex=6617baf8&is=660545f8&hm=fdb5c8f6b26fb95b20298281d5f7e9989e74dd8f4e7cf92228dbf68f415d51eb&"></div>
 				</div>
@@ -50,30 +53,30 @@
 					<div class="row">
 						<div class="col-md-2 my-1">
 							<label for="id" class="form-label">Mã</label>
-							<input type="number" class="form-control" id="id" placeholder="..." disabled>
+							<input type="number" class="form-control" id="id" name="id" placeholder="..." disabled>
 						</div>
 						<div class="col-md-10 my-1">
 							<label for="title" class="form-label">Tiêu đề</label>
-							<input type="text" class="form-control" id="title" value="Sách" placeholder="..." required>
+							<input type="text" class="form-control" id="title" name="title" value="Sách" placeholder="..." required>
 						</div>
 						<div class="col-md-4 my-1">
 							<label for="volume" class="form-label">Tập</label>
-							<input type="number" class="form-control" id="volume" value="1" onchange="inputControl(this)" placeholder="..." required>
+							<input type="number" class="form-control" id="volume" name="volume" value="1" onchange="inputControl(this)" placeholder="..." required>
 						</div>
 						<div class="col-md-4 my-1">
 							<label for="price" class="form-label">Đơn giá</label>
 							<div class="input-group">
-								<input type="number" class="form-control" id="price" value="100000" onchange="inputControl(this)" placeholder="..." required>
+								<input type="number" class="form-control" id="price" name="price" value="100000" onchange="inputControl(this)" placeholder="..." required>
 								<span class="input-group-text">đ</span>
 							</div>
 						</div>
 						<div class="col-md-4 my-1">
 							<label for="quantity" class="form-label">Số lượng</label>
-							<input type="number" class="form-control" id="quantity" value="1" onchange="inputControl(this)" placeholder="..." required>
+							<input type="number" class="form-control" id="quantity" name="quantity" value="1" onchange="inputControl(this)" placeholder="..." required>
 						</div>
 						<div class="col-12 my-1 d-flex justify-content-around">
-							<button class="btn btn-primary" type="submit">Cập nhật</button>
-							<button class="btn btn-danger" type="reset">Hoàn tác</button>
+							<button class="btn btn-primary" type="submit" name="submit">Cập nhật</button>
+							<button class="btn btn-danger" type="reset" name="reset">Hoàn tác</button>
 						</div>
 					</div>
 				</div>
@@ -99,10 +102,13 @@
 							<th>Công cụ</th>
 						</tr>
 					</thead>
-					<tbody class="display"></tbody>
+					<tbody class="display">
+						<?php displayBook($result) ?>
+					</tbody>
 				</table>
 			</div>
 		</div>
 	</section>
+	<?php include '../assets/php/footer.php'; ?>
 </body>
 </html>
