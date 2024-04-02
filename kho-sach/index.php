@@ -27,14 +27,13 @@
 	<link rel="stylesheet" href="../assets/main.css">
 
 	<!-- JS -->
-	<!-- <script type="text/javascript" src="../assets/js/extends.js" defer></script> -->
 	<!-- <script type="text/javascript" src="../assets/js/storage.js" defer></script> -->
 	<!-- <script type="text/javascript" src="../assets/js/cart.js" defer></script> -->
 	<script type="text/javascript" src="../assets/js/newStorage.js" defer></script>
 </head>
 <body>
 	<?php include '../assets/php/header.php'; ?>
-	<section class="d-flex justify-content-center">
+	<section class="mainForm d-flex justify-content-center">
 		<div class="displayBook bg-white mx-4 my-3 container rounded">
 			<div class="header d-flex align-items-end gap-2 border-bottom border-2 py-1">
 				<i class="bi bi-pencil-square icon"></i>
@@ -53,7 +52,7 @@
 					<div class="row">
 						<div class="col-md-2 my-1">
 							<label for="id" class="form-label">Mã</label>
-							<input type="number" class="form-control" id="id" name="id" placeholder="..." disabled>
+							<input type="number" class="form-control" id="id" name="id" value="<?php echo maxId($conn); ?>" placeholder="..." readonly>
 						</div>
 						<div class="col-md-10 my-1">
 							<label for="title" class="form-label">Tiêu đề</label>
@@ -75,8 +74,8 @@
 							<input type="number" class="form-control" id="quantity" name="quantity" value="1" onchange="inputControl(this)" placeholder="..." required>
 						</div>
 						<div class="col-12 my-1 d-flex justify-content-around">
-							<button class="btn btn-primary" type="submit" name="submit">Cập nhật</button>
-							<button class="btn btn-danger" type="reset" name="reset">Hoàn tác</button>
+							<button class="btnSubmit btn btn-primary" type="submit" name="submit">Cập nhật</button>
+							<button class="btn btn-danger" type="reset" name="reset" onclick="resetForm()">Hoàn tác</button>
 						</div>
 					</div>
 				</div>
@@ -103,7 +102,7 @@
 						</tr>
 					</thead>
 					<tbody class="display">
-						<?php displayBook($result) ?>
+						<?php displayBook($table) ?>
 					</tbody>
 				</table>
 			</div>

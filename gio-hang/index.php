@@ -27,7 +27,6 @@
 	<link rel="stylesheet" href="../assets/main.css">
 
 	<!-- JS -->
-	<!-- <script type="text/javascript" src="../assets/js/extends.js" defer></script> -->
 	<!-- <script type="text/javascript" src="../assets/js/storage.js" defer></script> -->
 	<!-- <script type="text/javascript" src="../assets/js/cart.js" defer></script> -->
 </head>

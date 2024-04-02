@@ -27,7 +27,6 @@
 	<link rel="stylesheet" href="assets/main.css">
 
 	<!-- JS -->
-	<!-- <script type="text/javascript" src="assets/js/extends.js" defer></script> -->
 	<!-- <script type="text/javascript" src="assets/js/storage.js" defer></script> -->
 	<!-- <script type="text/javascript" src="assets/js/cart.js" defer></script> -->
 </head>
@@ -40,7 +39,7 @@
 				<h3 class="m-0">Các loại sách</h3>
 			</div>
 			<div class="show row p-3 gap-2 justify-content-center">
-				<?php showBook($result); ?>
+				<?php showBook($table); ?>
 			</div>
 		</div>
 	</section>
