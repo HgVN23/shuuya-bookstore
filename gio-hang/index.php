@@ -27,8 +27,8 @@
 	<link rel="stylesheet" href="../assets/main.css">
 
 	<!-- JS -->
-	<!-- <script type="text/javascript" src="../assets/js/storage.js" defer></script> -->
-	<!-- <script type="text/javascript" src="../assets/js/cart.js" defer></script> -->
+	<script type="text/javascript" src="../assets/js/newStorage.js" defer></script>
+	<script type="text/javascript" src="../assets/js/newCart.js" defer></script>
 </head>
 <body>
 	<?php include '../assets/php/header.php'; ?>
@@ -39,8 +39,7 @@
 				<h3 class="m-0">Giỏ hàng</h3>
 			</div>
 			<div class="cart p-3">
-				<div class="text-center opacity-50"><i class="bi bi-cart4" style="font-size: 140px;"></i></div>
-				<h2 class="text-center opacity-50">Chưa có sách nào</h2>
+				<?php displayCart($conn, $book, $cart); ?>
 			</div>
 		</div>
 	</section>

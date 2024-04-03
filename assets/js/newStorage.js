@@ -16,7 +16,7 @@ if(document.querySelector('input#cover')) {
 			iCover.closest('form').querySelector('img').src = URL.createObjectURL(file);
 		}
 		else
-			iCover.closest('form').querySelector('img').src = 'https://cdn.discordapp.com/attachments/677761423870525442/1222854468450910298/coverNull.png?ex=6617baf8&is=660545f8&hm=fdb5c8f6b26fb95b20298281d5f7e9989e74dd8f4e7cf92228dbf68f415d51eb&';
+			resetForm();
 	}
 }
 
@@ -36,8 +36,6 @@ function editBook(tr) {
 	priceInput.value = temp.slice(0 , temp.length - 1);
 	quantityInput.value = tr.querySelector('td:nth-child(6)').textContent;
 
-	// form.removeEventListener('submit', addBook);
-	// form.addEventListener('submit', editConfirm);
 	form.querySelector('.btnSubmit').name = 'edit';
 
 	form.parentElement.scrollIntoView();

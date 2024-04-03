@@ -27,8 +27,6 @@
 	<link rel="stylesheet" href="../assets/main.css">
 
 	<!-- JS -->
-	<!-- <script type="text/javascript" src="../assets/js/storage.js" defer></script> -->
-	<!-- <script type="text/javascript" src="../assets/js/cart.js" defer></script> -->
 	<script type="text/javascript" src="../assets/js/newStorage.js" defer></script>
 </head>
 <body>
@@ -51,7 +49,7 @@
 				<div class="col-md-8">
 					<div class="row">
 						<div class="col-md-2 my-1">
-							<label for="id" class="form-label">Mã</label>
+							<label for="id" class="form-label">Mã (Tự sinh)</label>
 							<input type="number" class="form-control" id="id" name="id" value="<?php echo maxId($conn); ?>" placeholder="..." readonly>
 						</div>
 						<div class="col-md-10 my-1">
@@ -102,7 +100,7 @@
 						</tr>
 					</thead>
 					<tbody class="display">
-						<?php displayBook($table) ?>
+						<?php displayBook($book) ?>
 					</tbody>
 				</table>
 			</div>

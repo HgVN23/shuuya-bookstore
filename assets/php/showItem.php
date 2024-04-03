@@ -1,36 +1,51 @@
-<?php function showBook($table) {
-	if($table->num_rows > 0) {
-		while($row = $table->fetch_assoc()) {
-			if($row["quantity"] > 0)
-				$status = 'Green';
-			else
-				$status = 'Red';
-
-			$coverImg = 'data:image/*;charset=utf8;base64,' . base64_encode($row["cover"]);
-
+<?php
+	function showBook($book, $cart) {
+		if($book->num_rows > 0) {
+			while($row = $book->fetch_assoc()) {
+				$check = 0;
+				foreach ($cart as $item) {
+					if($item["id"] == $row["id"]) {
+						$check = 1;
+						break;
+					}
+				}
+				echo($check);
+				printBook($row, $check);
+			}
+		} else {
 			echo '
-				<div class="book col bg-white border p-2 d-flex flex-column flex-grow-0 justify-content-center gap-2 position-relative rounded">
-					<div class="cover align-self-center d-flex justify-content-center position-relative text-center">
-						<img class="align-self-center" src="'.$coverImg.'">
-						<span class="volumeText mt-1 p-1 position-absolute bottom-0 end-0 rounded">'.$row["volume"].'</span>
-					</div>
-					<div class="title border-top" title="'.$row["title"].'">'.$row["title"].'</div>
-					<div class="price">'.$row["price"].'</div>
-					<button class="btnCart btn btn-primary" id="b'.$row["id"].'" '.disAdd($row["quantity"]).'>Thêm vào giỏ hàng</button>
-					<span class="status'.$status.' mt-1 p-1 position-absolute top-0 rounded"></span>
-				</div>
+				<div class="d-flex justify-content-center opacity-50"><img width="180" height="120" src="assets/img/book.png"></div>
+				<h2 class="text-center opacity-50">Chưa có sách nào</h2>
 			';
 		}
-	} else {
+	}
+	function printBook($row, $check) {
+		if($row["quantity"] > 0)
+			$status = 'Green';
+		else
+			$status = 'Red';
+
+		$coverImg = 'data:image/*;charset=utf8;base64,' . base64_encode($row["cover"]);
+
 		echo '
-			<div class="d-flex justify-content-center opacity-50"><img width="180" height="120" src="assets/img/book.png"></div>
-			<h2 class="text-center opacity-50">Chưa có sách nào</h2>
+			<div class="book col bg-white border p-2 d-flex flex-column flex-grow-0 justify-content-center gap-2 position-relative rounded">
+				<div class="cover align-self-center d-flex justify-content-center position-relative text-center">
+					<img class="align-self-center" src="'.$coverImg.'">
+					<span class="volumeText mt-1 p-1 position-absolute bottom-0 end-0 rounded">'.$row["volume"].'</span>
+				</div>
+				<div class="title border-top" title="'.$row["title"].'">'.$row["title"].'</div>
+				<div class="price">'.$row["price"].'</div>
+				<form class="row px-3" method="POST">
+					<button class="btnCart col-12 btn btn-primary" data-quantity="'.$row["quantity"].'" data-check="'.$check.'" type="submit" name="addCart" value="'.$row["id"].'">Thêm vào giỏ hàng</button>
+				</form>
+				<span class="status'.$status.' mt-1 p-1 position-absolute top-0 rounded"></span>
+			</div>
 		';
 	}
-} ?>
-<?php function displayBook($table) {
-	if($table->num_rows > 0) {
-		while($row = $table->fetch_assoc()) {
+?>
+<?php function displayBook($book) {
+	if($book->num_rows > 0) {
+		while($row = $book->fetch_assoc()) {
 			$coverImg = 'data:image/*;charset=utf8;base64,' . base64_encode($row["cover"]);
 
 			echo '
@@ -50,5 +65,76 @@
 				</tr>
 			';
 		}
+	}
+} ?>
+<?php function displayCart($conn, $book, $cart) {
+	if($cart->num_rows > 0) {
+		while($item = $cart->fetch_assoc()) {
+			$temp = $item["id"];
+			$temp2 = $conn->query("SELECT * FROM book WHERE id = '$temp'");
+			$row = $temp2->fetch_assoc();
+
+			$coverImg = 'data:image/*;charset=utf8;base64,' . base64_encode($row["cover"]);
+
+			echo '
+				<div class="addBook row border-bottom py-2">
+					<div class="col-md-4 d-flex flex-column gap-2">
+						<div class="cover border align-self-center d-flex justify-content-center text-center"><img id="coverPreview" class="align-self-center" src="'.$coverImg.'"></div>
+					</div>
+					<div class="col-md-8">
+						<div class="row">
+							<div class="col-md-2 my-1">
+								<label for="id" class="form-label">Mã</label>
+								<input type="number" class="form-control" id="id" value="'.$row["id"].'" disabled>
+							</div>
+							<div class="col-md-10 my-1">
+								<label for="title" class="form-label">Tiêu đề</label>
+								<input type="text" class="form-control" id="title" value="'.$row["title"].'" disabled>
+							</div>
+							<div class="col-md-4 my-1">
+								<label for="volume" class="form-label">Tập</label>
+								<input type="number" class="form-control" id="volume" value="'.$row["volume"].'" disabled>
+							</div>
+							<div class="col-md-4 my-1">
+								<label for="price" class="form-label">Đơn giá</label>
+								<div class="input-group">
+									<input type="number" class="form-control" id="price" value="'.$row["price"].'" disabled>
+									<span class="input-group-text">đ</span>
+								</div>
+							</div>
+							<div class="col-md-4 my-1">
+								<label for="quantity" class="form-label">Số lượng</label>
+								<div class="input-group">
+									<input type="number" class="quantity form-control" id="quantity" value="1" onchange="sum(this.closest(\'.row\')); inputControl(this); inputLimit(this)" required>
+									<span class="input-group-text">/'.$row["quantity"].'</span>
+								</div>
+							</div>
+							<div class="col-md-6 my-1">
+								<label for="total" class="form-label">Thành tiền</label>
+								<div class="input-group">
+									<input type="number" class="form-control" id="total" value="'.$row["price"].'" disabled>
+									<span class="input-group-text">đ</span>
+								</div>
+							</div>
+							<div class="col-md-6 my-1 d-flex justify-content-end align-items-end gap-4">
+								<button class="pay btn btn-success" id="b'.$row["id"].'" onclick="payItem(this)">Thanh toán</button>
+								<button class="btn btn-danger" id="b'.$row["id"].'" onclick="removeItem(this)">Xóa</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			';
+		}
+		echo '
+			<form class="btnGroup d-flex flex-md-row flex-column justify-content-around pt-2 gap-2" method="POST">
+				<button class="payAll btn btn-success" type="submit" name="payCart">Thanh toán tất cả</button>
+				<button class="btn btn-danger" type="submit" name="removeCart">Xóa tất cả</button>
+			</form>
+		';
+	} else {
+		echo '
+			<div class="text-center opacity-50"><i class="bi bi-cart4" style="font-size: 140px;"></i></div>
+			<h2 class="text-center opacity-50">Chưa có sách nào</h2>
+		';
 	}
 } ?>

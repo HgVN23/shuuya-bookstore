@@ -11,8 +11,8 @@
 		die("Connection failed: " . $conn->connect_error);
 	}
 
-	$sql = "SELECT * FROM book";
-	$table = $conn->query($sql);
+	$book = $conn->query("SELECT * FROM book");
+	$cart = $conn->query("SELECT * FROM cart");
 ?>
 <?php
 	if(isset($_POST['submit'])) {
@@ -54,15 +54,32 @@
 	}
 ?>
 <?php
-	function maxId($conn) {
-		$result = $conn->query("SELECT max(`id`) AS max FROM book");
-		return (int)$result->fetch_assoc()["max"] + 1;
+	if(isset($_POST['addToCart'])) {
+		$id = $_POST['addToCart'];
+
+		mysqli_query($conn, "INSERT INTO `cart`(`id`) VALUES ('$id')");
+
+		header("Location: ./");
+	}
+	if(isset($_POST['removeFromCart'])) {
+		$id = $_POST['removeFromCart'];
+
+		mysqli_query($conn, "DELETE FROM `cart` WHERE id = '$id'");
+
+		header("Location: ./");
 	}
 ?>
 <?php
-	function disAdd($quantity) {
-		if($quantity == 0)
-			echo "disabled";
+	if(isset($_POST['payCart'])) {
+		$id = $_POST['payCart'];
+
+		
+	}
+?>
+<?php
+	function maxId($conn) {
+		$result = $conn->query("SELECT max(`id`) AS max FROM book");
+		return (int)$result->fetch_assoc()["max"] + 1;
 	}
 ?>
 <?php include 'showItem.php'; ?>
