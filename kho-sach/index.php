@@ -37,12 +37,11 @@
 				<i class="bi bi-pencil-square icon"></i>
 				<h3 class="m-0">Cập nhật sách</h3>
 			</div>
-			<form class="addBook row mt-2" method="POST">
+			<form class="addBook row mt-2" method="POST" enctype="multipart/form-data">
 				<div class="col-md-4 d-flex flex-column gap-2">
 					<div>
 						<label for="cover" class="form-label">Ảnh bìa</label>
-						<input class="form-control" type="file" id="cover" name="coverImg" accept="image/*">
-						<!-- <input class="form-control" type="text" id="cover" accept="image/*" placeholder="Link ảnh..."> -->
+						<input class="form-control" type="file" id="cover" name="cover" accept="image/*">
 					</div>
 					<div class="cover border mb-2 align-self-center d-flex justify-content-center text-center"><img id="coverPreview" class="align-self-center" src="https://cdn.discordapp.com/attachments/677761423870525442/1222854468450910298/coverNull.png?ex=6617baf8&is=660545f8&hm=fdb5c8f6b26fb95b20298281d5f7e9989e74dd8f4e7cf92228dbf68f415d51eb&"></div>
 				</div>
@@ -50,7 +49,7 @@
 					<div class="row">
 						<div class="col-md-2 my-1">
 							<label for="id" class="form-label">Mã (Tự sinh)</label>
-							<input type="number" class="form-control" id="id" name="id" value="<?php echo maxId($conn); ?>" placeholder="..." readonly>
+							<input type="number" class="form-control bg-primary-subtle" id="id" name="id" value="<?php echo maxId($conn); ?>" placeholder="..." readonly>
 						</div>
 						<div class="col-md-10 my-1">
 							<label for="title" class="form-label">Tiêu đề</label>

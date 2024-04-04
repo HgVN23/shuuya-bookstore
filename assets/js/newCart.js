@@ -1,4 +1,5 @@
 setBtnCart();
+loadLimit();
 
 // Vô hiệu hóa Thêm vào giỏ khi hết hàng
 // Check thêm hoặc xóa hàng khỏi Giỏ
@@ -23,11 +24,12 @@ function setBtnCart() {
 
 // Thành tiền 1 sách = Đơn giá * Số lượng
 function sum(item) {
-	const priceInput = item.querySelector('#price');
-	const quantityInput = item.querySelector('#quantity');
-	const totalInput = item.querySelector('#total');
+	const itemRow = item.closest('.row');
+	const priceInput = itemRow.querySelector('#price');
+	const quantityInput = itemRow.querySelector('#quantity');
+	const totalInput = itemRow.querySelector('#total');
 
-	const temp = setTimeout(function() {
+	const time = setTimeout(function() {
 		totalInput.value = priceInput.value * quantityInput.value;
 	}, 200);
 }
@@ -54,7 +56,23 @@ function inputLimit(item) {
 		}
 	}
 	if(check)
-		document.querySelector('.payAll').disabled = true;
+		document.querySelector('.payCart').disabled = true;
 	else
-		document.querySelector('.payAll').disabled = false;
+		document.querySelector('.payCart').disabled = false;
+}
+
+// Load limit
+function loadLimit() {
+	const temp = document.querySelectorAll('.quantity');
+
+	temp.forEach(e => {
+		inputLimit(e);
+	});
+}
+
+function updateQuantity(item) {
+	const itemRow = item.closest('.row');
+	itemRow.querySelector('.update').hidden = false;
+	itemRow.querySelector('.pay').disabled = true;
+	itemRow.closest('.cart').querySelector('.payCart').disabled = true;
 }
