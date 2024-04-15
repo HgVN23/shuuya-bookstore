@@ -22,7 +22,7 @@
 		if(isset($_FILES['cover']) && $_FILES['cover']['error'] == 0)
 			$cover = file_get_contents($_FILES['cover']['tmp_name']);
 		else
-			$cover = file_get_contents('https://cdn.discordapp.com/attachments/677761423870525442/1222854468450910298/coverNull.png?ex=6617baf8&is=660545f8&hm=fdb5c8f6b26fb95b20298281d5f7e9989e74dd8f4e7cf92228dbf68f415d51eb&');
+			$cover = file_get_contents('https://cdn.discordapp.com/attachments/677761423870525442/1222854468450910298/coverNull.png?ex=662a2ff8&is=6617baf8&hm=8f4daee9b077736301afeb4f726fd0dcc5bc5a2b00b1b6e61c5d3348b625d316&');
 
 		$stmt = $pdo->prepare("INSERT INTO book (cover) VALUES (?)");
 		$stmt->bindParam(1, $cover);
