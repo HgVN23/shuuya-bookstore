@@ -1,4 +1,22 @@
-<?php include 'assets/php/db.php'; ?>
+<?php include 'assets/php/crud.php'; ?>
+<?php
+	if(isset($_POST['addToCart'])) {
+		$id = $_POST['addToCart'];
+
+		$query = "INSERT INTO `cart`(`id`, `quantity`) VALUES ('$id', '1')";
+		$cart->execute($query);
+		$cart->stopSubmit();
+	}
+?>
+<?php
+	if(isset($_POST['removeFromCart'])) {
+		$id = $_POST['removeFromCart'];
+
+		$query = "DELETE FROM `cart` WHERE id = '$id'";
+		$cart->execute($query);
+		$cart->stopSubmit();
+	}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +56,7 @@
 				<h3 class="m-0">Các loại sách</h3>
 			</div>
 			<div class="show row p-3 gap-2 justify-content-center">
-				<?php showBook($book, $cart); ?>
+				<?php showBook($book->display('book'), $cart->display('cart')); ?>
 			</div>
 		</div>
 	</section>

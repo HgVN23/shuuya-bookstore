@@ -66,11 +66,11 @@
 		}
 	}
 } ?>
-<?php function displayCart($conn, $book, $cart) {
+<?php function displayCart($book, $cart) {
 	if($cart->num_rows > 0) {
 		while($item = $cart->fetch_assoc()) {
 			$temp = $item["id"];
-			$temp2 = $conn->query("SELECT * FROM book WHERE id = '$temp'");
+			$temp2 = $book->execute("SELECT * FROM book WHERE id = '$temp'");
 			$row = $temp2->fetch_assoc();
 
 			// $coverImg = 'data:image/*;charset=utf8;base64,' . base64_encode($row["cover"]);

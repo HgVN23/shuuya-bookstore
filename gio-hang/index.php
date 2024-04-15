@@ -1,4 +1,57 @@
-<?php include '../assets/php/db.php'; ?>
+<?php include '../assets/php/crud.php'; ?>
+<?php
+	if(isset($_POST['payItem'])) {
+		$id = $_POST['payItem'];
+		$quantity = $_POST['quantity'];
+
+		$query1 = "UPDATE `book` SET `quantity`= (quantity - '$quantity') WHERE id = '$id'";
+		$book->execute($query1);
+		$query2 = "DELETE FROM `cart` WHERE id = '$id'";
+		$cart->execute($query2);
+
+		$cart->stopSubmit();
+	}
+
+	if(isset($_POST['removeFromCart'])) {
+		$id = $_POST['removeFromCart'];
+
+		$query = "DELETE FROM `cart` WHERE id = '$id'";
+		$cart->execute($query);
+
+		$cart->stopSubmit();
+	}
+
+	if(isset($_POST['removeCart'])) {
+		$query = "DELETE FROM `cart`";
+		$cart->execute($query);
+
+		$cart->stopSubmit();
+	}
+
+	if(isset($_POST['payCart'])) {
+		$temp = $cart->display('cart');
+		while($item = $temp->fetch_assoc()) {
+			$tempId = $item["id"];
+			$quantity = $item["quantity"];
+			$query = "UPDATE `book` SET `quantity`= (quantity - '$quantity') WHERE id = '$tempId'";
+			$book->execute($query);
+		}
+		$query = "DELETE FROM `cart`";
+		$cart->execute($query);
+
+		$cart->stopSubmit();
+	}
+
+	if(isset($_POST['update'])) {
+		$id = $_POST['update'];
+		$quantity = $_POST['quantity'];
+
+		$query = "UPDATE `cart` SET `quantity`= '$quantity' WHERE id = '$id'";
+		$cart->execute($query);
+
+		$cart->stopSubmit();
+	}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +92,7 @@
 				<h3 class="m-0">Giỏ hàng</h3>
 			</div>
 			<div class="cart p-3">
-				<?php displayCart($conn, $book, $cart); ?>
+				<?php displayCart($book, $cart->display('cart')); ?>
 			</div>
 		</div>
 	</section>
