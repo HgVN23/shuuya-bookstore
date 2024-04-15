@@ -111,7 +111,7 @@ if(document.querySelector('input#cover')) {
 		if(iCover.value != "")
 			iCover.closest('form').querySelector('img').src = iCover.value;
 		else
-			iCover.closest('form').querySelector('img').src = 'https://cdn.discordapp.com/attachments/677761423870525442/1222854468450910298/coverNull.png?ex=6617baf8&is=660545f8&hm=fdb5c8f6b26fb95b20298281d5f7e9989e74dd8f4e7cf92228dbf68f415d51eb&';
+			iCover.closest('form').querySelector('img').src = 'https://cdn.discordapp.com/attachments/677761423870525442/1222854468450910298/coverNull.png?ex=662a2ff8&is=6617baf8&hm=8f4daee9b077736301afeb4f726fd0dcc5bc5a2b00b1b6e61c5d3348b625d316&';
 	}
 }
 
